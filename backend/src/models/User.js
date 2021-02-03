@@ -4,6 +4,14 @@ const userSchema = new Schema({
         required: true,
         trim: true,
         unique: true
+    },
+    valuevote: {
+        type: Number,
+        require: false
+    },
+    statusvote: {
+        type: Boolean,
+        require: false
     }
 }, {
     timestamps: true
