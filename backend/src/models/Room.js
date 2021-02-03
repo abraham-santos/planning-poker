@@ -1,6 +1,8 @@
+const { Schema, model } = require('mongoose');
+
 const roomSchema = new Schema({
-    id: {
-        type: Number,
+    roomname: {
+        type: String,
         required: true
     },
     project: {
@@ -11,8 +13,19 @@ const roomSchema = new Schema({
         type: String,
         required: true
     },
-    unhiddenvotes: Boolean,
-    estimation: Number
+    unhiddenvotes: {
+        type: Boolean,
+        default: false
+    },
+    estimation: {
+        type: Number,
+        default: 0
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }]
 }, {
     timestamps: true
 })
