@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 
+// Define User schema
 const userSchema = new Schema({
     user: {
         type: String,
@@ -14,6 +15,10 @@ const userSchema = new Schema({
         required: false
     },
     ismoderator: {
+        type: Boolean,
+        required: false
+    },
+    showcards: {
         type: Boolean,
         required: false
     },

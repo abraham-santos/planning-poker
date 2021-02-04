@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 
+// Define Room schema
 const roomSchema = new Schema({
     roomname: {
         type: String,
@@ -12,10 +13,6 @@ const roomSchema = new Schema({
     userstory: {
         type: String,
         required: true
-    },
-    unhiddenvotes: {
-        type: Boolean,
-        default: false
     },
     estimation: {
         type: Number,
