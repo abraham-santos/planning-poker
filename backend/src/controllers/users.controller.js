@@ -8,31 +8,31 @@ userCtrl.getUsers = async (req ,res) => {
 };
 
 userCtrl.createUser = async (req, res) => {
-    const {username, valuevote, statusvote, ismoderator, roomid} = req.body;
+    const {user, valuevote, statusvote, ismoderator, roomname} = req.body;
     const newUser = new User({
-        username: username,
+        user: user,
         valuevote: valuevote,
         statusvote: statusvote,
         ismoderator: ismoderator,
-        roomid: roomid
+        roomname: roomname
     });
     await newUser.save();
     res.json({message: 'User saved.'})
 }
 
 userCtrl.getUser = async (req, res) => {
-    const user = await User.findById(req.params.id);
-    res.json(user)
+    const user1 = await User.findById(req.params.id);
+    res.json(user1)
 }
 
 userCtrl.updateUser = async (req, res) => {
-    const {username,valuevote, statusvote, ismoderator, roomid} = req.body;
-    await User.findOneAndUpdate(req.params.id,{
-        username: username,
+    const {user,valuevote, statusvote, ismoderator, roomname} = req.body;
+    await User.findByIdAndUpdate(req.params.id,{
+        user: user,
         valuevote: valuevote,
         statusvote: statusvote,
         ismoderator: ismoderator,
-        roomid: roomid
+        roomname: roomname
     },{new: true});
     res.json({message: 'User updated.'})
 }

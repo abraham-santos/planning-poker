@@ -1,26 +1,24 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema({
-    username: {
+    user: {
         type: String,
-        required: true,
-        trim: true,
-        unique: true
+        required: true
     },
     valuevote: {
         type: Number,
-        require: 0
+        required: false
     },
     statusvote: {
         type: Boolean,
-        require: false
+        required: false
     },
     ismoderator: {
-        type: Boolean
+        type: Boolean,
+        required: false
     },
-    roomid: {
-        type: Schema.Types.ObjectId,
-        ref: 'Room',
+    roomname: {
+        type: String,
         required: true
     }
 }, {

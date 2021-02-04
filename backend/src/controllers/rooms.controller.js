@@ -18,16 +18,14 @@ roomsCtrl.createRoom = async (req, res) => {
     res.json({message: 'Room saved.'})
 }
 
-
 roomsCtrl.getRoom = async (req, res) => {
     const room = await Room.findById(req.params.id);
     res.json(room)
 }
 
 roomsCtrl.updateRoom = async (req, res) => {
-    const {id, project, userstory, unhiddenvotes, estimation} = req.body;
-    await Room.findOneAndUpdate(req.params.id,{
-        id: id,
+    const {project, userstory, unhiddenvotes, estimation} = req.body;
+    await Room.findByIdAndUpdate(req.params.id,{
         project: project,
         userstory: userstory,
         unhiddenvotes: unhiddenvotes,

@@ -20,12 +20,7 @@ const roomSchema = new Schema({
     estimation: {
         type: Number,
         default: 0
-    },
-    users: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        default: []
-    }]
+    }
 }, {
     timestamps: true
 })
