@@ -1,39 +1,18 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-//import 'react-datepicker/dist/react-datepicker.css'
 
 export default class CreateRoom extends Component {
     
     state = {
-        //users: [],
-        //userSelected: '',
         roomname: '',
         project: '',
         userstory: '',
         unhiddenvotes: false,
         estimation: 0,
         user: '',
-        //editing: false,
         _id: ''
     }
-    async componentDidMount(){
-        /*const res = await axios.get('http://localhost:4000/api/users');
-        this.setState({
-            users: res.data.map(user => user.username),
-            userSelected: res.data[0].username
-        });*/
-        /*if(this.props.match.params.id){
-            const res = await axios.get('http://localhost:4000/api/rooms/' + this.props.match.params.id)
-            this.setState({
-                title: res.data.title,
-                content: res.data.content,
-                date: new Date(res.data.date),
-                userSelected: res.data.author,
-                editing: true,
-                _id: this.props.match.params.id
-            })
-        }*/
-    }
+    
 
     getUserId = async () => {
         const res = await axios.get('http://localhost:4000/api/users');
@@ -55,7 +34,7 @@ export default class CreateRoom extends Component {
             userstory: this.state.userstory,
             unhiddenvotes: this.state.unhiddenvotes,
             estimation: this.state.estimation
-            //author:this.state.userSelected
+            
         }
         const newUser = {
             user: this.state.user,
@@ -64,13 +43,11 @@ export default class CreateRoom extends Component {
             ismoderator: true,
             roomname: this.state.roomname
         }
-        //if(this.state.editing){
-          //  await axios.put('http://localhost:4000/api/rooms/' + this.state._id, newRoom)
-        //}else{
+        
         await axios.post('http://localhost:4000/api/rooms', newRoom);
         await axios.post('http://localhost:4000/api/users', newUser);
         await this.getUserId();
-        //}
+    
         window.location.href = '/user/'+ this.state._id;
     }
     onInputChange = e => {

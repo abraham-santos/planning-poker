@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-//import 'react-datepicker/dist/react-datepicker.css'
 
 export default class VoteUser extends Component {
     
     state = {
-        // users: [],
-        //userSelected: '',
         user: '',
         valuevote:0,
         statusvote:'',
@@ -14,28 +11,18 @@ export default class VoteUser extends Component {
         roomname:'',
         project:'',
         userstory:'',
-        //date: new Date(),
         _id: '',
         _roomid:''
     }
     async componentDidMount(){
         
-        /*const res = await axios.get('http://localhost:4000/api/users');
-        this.setState({
-            users: res.data.map(user => user.username),
-            userSelected: res.data[0].username,
-            _id: this.props.match.params.id
-        });
-        */
         const res1 = await axios.get('http://localhost:4000/api/users/' + this.props.match.params.id)
-        //console.log(res1.data)
         this.setState({
             user: res1.data.user,
             valuevote: res1.data.valuevote,
             statusvote: res1.data.statusvote,
             ismoderator: res1.data.ismoderator,
             roomname: res1.data.roomname,
-            //userSelected: res1.data.author,
             _id: this.props.match.params.id
         })
         this.getRoomData();
@@ -75,7 +62,7 @@ export default class VoteUser extends Component {
         console.log(this.state._id);
         await axios.put('http://localhost:4000/api/users/' + this.state._id, newUser)
         
-        window.location.href = '/ResultRoom';
+        window.location.href = '/result/' + this.state._id;
     }
     onInputChange = e => {
         this.setState({
