@@ -28,11 +28,12 @@ roomsCtrl.getRoom = async (req, res) => {
 
 // Update a room
 roomsCtrl.updateRoom = async (req, res) => {
-    const {project, userstory, estimation} = req.body;
+    const {project, userstory, estimation, showcards} = req.body;
     await Room.findByIdAndUpdate(req.params.id,{
         project: project,
         userstory: userstory,
-        estimation: estimation
+        estimation: estimation,
+        showcards: showcards
     },{new: true});
     res.json({message: 'Room updated.'})
 }

@@ -12,15 +12,12 @@ const userSchema = new Schema({
     },
     statusvote: {
         type: Boolean,
-        required: false
+        required: false,
+        default: false
     },
     ismoderator: {
         type: Boolean,
-        required: false
-    },
-    showcards: {
-        type: Boolean,
-        required: false
+        required: true,
     },
     roomname: {
         type: String,

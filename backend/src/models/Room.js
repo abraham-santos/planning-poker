@@ -14,8 +14,14 @@ const roomSchema = new Schema({
         type: String,
         required: true
     },
+    showcards: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
     estimation: {
         type: Number,
+        required: false,
         default: 0
     }
 }, {
