@@ -5,62 +5,57 @@ export default class VoteUser extends Component {
     
     state = {
         user: '',
-        valuevote:0,
-        statusvote:'',
-        ismoderator:'',
-        roomname:'',
-        project:'',
-        userstory:'',
+        valuevote: '',
+        statusvote: false,
+        ismoderator: false,
+        roomname: '',
+        project: '',
+        userstory: '',
         _id: '',
-        _roomid:''
+        roomid: ''
     }
     async componentDidMount(){
         
-        const res1 = await axios.get('http://localhost:4000/api/users/' + this.props.match.params.id)
-        this.setState({
-            user: res1.data.user,
-            valuevote: res1.data.valuevote,
-            statusvote: res1.data.statusvote,
-            ismoderator: res1.data.ismoderator,
-            roomname: res1.data.roomname,
-            _id: this.props.match.params.id
-        })
-        this.getRoomData();
-    }
-
-    getRoomData = async () => {
+        const response = await axios.get('http://localhost:4000/api/users/' + this.props.match.params.id);
         const res = await axios.get('http://localhost:4000/api/rooms');
-        const rooms = res.data;
-        let roomid = '';
-        let project = '';
-        let userstory = '';
-        rooms.forEach(element => {
-            if(element.roomname === this.state.roomname){
-                roomid = element._id;
-                project = element.project;
-                userstory = element.userstory;
+
+        var _roomid = '';
+        var _project = '';
+        var _userstory = '';
+        res.data.forEach(element => {
+            if(element.roomname === response.data.roomname){
+                _roomid = element._id;
+                _project = element.project;
+                _userstory = element.userstory;
             }
         });
         
         this.setState({
-            _roomid: roomid,
-            project: project,
-            userstory: userstory
-        });
+            user: response.data.user,
+            valuevote: response.data.valuevote,
+            //statusvote: response.data.statusvote,
+            ismoderator: response.data.ismoderator,
+            roomname: response.data.roomname,
+            _id: this.props.match.params.id,
+            roomid: _roomid,
+            project: _project,
+            userstory: _userstory
+        })
+
     }
+
 
     
     onSubmit = async (e) => {
         e.preventDefault();
-        const newUser = {
-            user: this.state.user,
+        const updateUser = {
+            //user: this.state.user,
             valuevote: parseInt(this.state.valuevote),
             statusvote: true,
             ismoderator: this.state.ismoderator,
             roomname: this.state.roomname
         }
-        console.log(this.state._id);
-        await axios.put('http://localhost:4000/api/users/' + this.state._id, newUser)
+        await axios.put('http://localhost:4000/api/users/' + this.state._id, updateUser)
         
         window.location.href = '/result/' + this.state._id;
     }
@@ -79,36 +74,34 @@ export default class VoteUser extends Component {
                     <h4>Submit estimate</h4>
                     
                     <div className="form-group">
-                        <input
+                    <b>Project:</b> <input
                             type="text"
                             className="form-control" 
                             placeholder="Project" 
                             name="project"
-                            onChange={this.onInputChange}
                             value={this.state.project}
-                            required
+                            readOnly
                         >
                         </input>
                     </div>
 
                     <div className="form-group">
-                        <input 
+                    <b>User Story:</b><input 
                             type="text" 
                             className="form-control"
                             placeholder="User Story"
                             name="userstory"
-                            onChange={this.onInputChange}
                             value={this.state.userstory}
-                            required
+                            readOnly
                             >
                         </input>
                     </div>
                     
                     <div className="form-group">
-                        <input 
+                    <b>Estimation: [0, 1 , 2, 3, 5, 8, 13, 21, 34, 55, 89]</b><input 
                             type="text" 
                             className="form-control"
-                            placeholder="Vote Value"
+                            placeholder="0, 1 , 2, 3, 5, 8, 13, 21, 34, 55, 89"
                             name="valuevote"
                             onChange={this.onInputChange}
                             value={this.state.valuevote}

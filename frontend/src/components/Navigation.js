@@ -15,15 +15,14 @@ export default class Navigation extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to="/">Rooms</Link>
-                            </li>
+                    
                             <li className="nav-item">
                                 <Link className="nav-link" to="/create">Create Room</Link>
                             </li>
                             <li className="nav-item">
                                 <Link className="nav-link" to="/join">Join a Room</Link>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>

@@ -7,8 +7,8 @@ export default class CreateRoom extends Component {
         roomname: '',
         project: '',
         userstory: '',
-        unhiddenvotes: false,
         estimation: 0,
+        showcards: false,
         user: '',
         _id: ''
     }
@@ -32,9 +32,8 @@ export default class CreateRoom extends Component {
             roomname: this.state.roomname,
             project: this.state.project,
             userstory: this.state.userstory,
-            unhiddenvotes: this.state.unhiddenvotes,
-            estimation: this.state.estimation
-            
+            estimation: 0,
+            showcards: false
         }
         const newUser = {
             user: this.state.user,
