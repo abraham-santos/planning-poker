@@ -46,12 +46,14 @@ export default class ResultRoom extends Component {
 
         let userresults = resp.data.filter(item => item.roomname === response.data.roomname);
         var showdata = [];
+        var sum = 0;
         userresults.forEach(element => {
             let newstatus = '';
             if (element.statusvote === false) {
                 newstatus = 'Pending';
             } else {
                 newstatus = 'Done';
+                
             }
 
             let showstatuscard = '';
@@ -59,6 +61,7 @@ export default class ResultRoom extends Component {
                 showstatuscard = 'Hidden';
             } else {
                 showstatuscard = element.valuevote
+                sum = sum + element.valuevote
             }
             let valueUser = {
                 user: element.user,
@@ -69,8 +72,13 @@ export default class ResultRoom extends Component {
             }
             showdata.push(valueUser);
         });
-
-
+        let finalestimation = sum/userresults.length;
+        if (_showcards) {
+            _estimation = Number(finalestimation.toFixed(1));
+        }else{
+            _estimation = 0;
+        }
+        
         this.setState({
             user: response.data.user,
             valuevote: response.data.valuevote,
@@ -86,30 +94,17 @@ export default class ResultRoom extends Component {
             estimation: _estimation,
             totalusers: showdata
         });
-        console.log("1:" + _estimation);
     }
 
 
     onSubmit = async (e) => {
         e.preventDefault();
-        let esti = 0;
-        let sum = 0;
-        var est = 0;
-        this.state.totalusers.forEach(element => {
-            sum = sum + element.valuevote
-        });
-        esti = sum / this.state.totalusers.length;
-        est = parseInt(Number(esti.toFixed(1)));
-        console.log("2:"+est)
-        this.setState({
-            showcards: true,
-            estimation: est
-        });
+        
         const updateRoom = {
             roomname: this.state.roomname,
             project: this.state.project,
             userstory: this.state.userstory,
-            estimation: est,
+            estimation: this.state.estimation,
             showcards: true
         }
 
