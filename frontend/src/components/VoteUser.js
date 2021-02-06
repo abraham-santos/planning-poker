@@ -15,13 +15,15 @@ export default class VoteUser extends Component {
         roomid: ''
     }
     async componentDidMount(){
-        
+        // Get the data of the user that was created before
         const response = await axios.get('http://localhost:4000/api/users/' + this.props.match.params.id);
+        // Get all rooms available
         const res = await axios.get('http://localhost:4000/api/rooms');
 
         var _roomid = '';
         var _project = '';
         var _userstory = '';
+        // Look for the room that belong to the user
         res.data.forEach(element => {
             if(element.roomname === response.data.roomname){
                 _roomid = element._id;
@@ -33,7 +35,6 @@ export default class VoteUser extends Component {
         this.setState({
             user: response.data.user,
             valuevote: response.data.valuevote,
-            //statusvote: response.data.statusvote,
             ismoderator: response.data.ismoderator,
             roomname: response.data.roomname,
             _id: this.props.match.params.id,
@@ -41,22 +42,19 @@ export default class VoteUser extends Component {
             project: _project,
             userstory: _userstory
         })
-
     }
 
-
-    
     onSubmit = async (e) => {
         e.preventDefault();
+        // Update user with the vote
         const updateUser = {
-            //user: this.state.user,
             valuevote: parseInt(this.state.valuevote),
             statusvote: true,
             ismoderator: this.state.ismoderator,
             roomname: this.state.roomname
         }
         await axios.put('http://localhost:4000/api/users/' + this.state._id, updateUser)
-        
+        // Go to result page
         window.location.href = '/result/' + this.state._id;
     }
     onInputChange = e => {

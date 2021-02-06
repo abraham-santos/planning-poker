@@ -8,7 +8,7 @@ export default class JoinRoom extends Component {
         user: '',
         _id: ''
     }
-
+    // Get the user id of the user created
     getUserId = async () => {
         const res = await axios.get('http://localhost:4000/api/users');
         const users = res.data;
@@ -23,18 +23,18 @@ export default class JoinRoom extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-    
+        // create the user with the room that already exist
         const newUser = {
             user: this.state.user,
             valuevote: 0,
             statusvote: false,
             ismoderator: false,
-            roomname: this.state.roomname
+            roomname: this.state.roomname // the room name is provided by the user
         }
         
         await axios.post('http://localhost:4000/api/users', newUser);
         await this.getUserId();
-
+        // Go to Estimation page
         window.location.href = '/user/'+ this.state._id;
     }
     onInputChange = e => {

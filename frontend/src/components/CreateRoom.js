@@ -13,7 +13,7 @@ export default class CreateRoom extends Component {
         _id: ''
     }
     
-
+    // Get the user id of the user created
     getUserId = async () => {
         const res = await axios.get('http://localhost:4000/api/users');
         const users = res.data;
@@ -42,11 +42,11 @@ export default class CreateRoom extends Component {
             ismoderator: true,
             roomname: this.state.roomname
         }
-        
+        // Save the new room and the new user
         await axios.post('http://localhost:4000/api/rooms', newRoom);
         await axios.post('http://localhost:4000/api/users', newUser);
         await this.getUserId();
-    
+        // Go to Estimation page
         window.location.href = '/user/'+ this.state._id;
     }
     onInputChange = e => {

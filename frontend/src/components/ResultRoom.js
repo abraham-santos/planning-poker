@@ -24,7 +24,9 @@ export default class ResultRoom extends Component {
     }
 
     async componentDidMount() {
+        // Get the values for the user that already exist
         const response = await axios.get('http://localhost:4000/api/users/' + this.props.match.params.id);
+        // Get a list off all rooms
         const res = await axios.get('http://localhost:4000/api/rooms');
 
         var _roomid = '';
@@ -32,6 +34,7 @@ export default class ResultRoom extends Component {
         var _userstory = '';
         var _showcards = false;
         var _estimation = 0;
+        // Look for the room of the user
         res.data.forEach(element => {
             if (element.roomname === response.data.roomname) {
                 _roomid = element._id;
@@ -41,12 +44,13 @@ export default class ResultRoom extends Component {
                 _estimation = element.estimation;
             }
         });
-
+        // Get all users created
         const resp = await axios.get('http://localhost:4000/api/users');
-
+        // Get all users that belong to user's room
         let userresults = resp.data.filter(item => item.roomname === response.data.roomname);
         var showdata = [];
         var sum = 0;
+        // Manipulate the status to show Pending or Done state in the UI
         userresults.forEach(element => {
             let newstatus = '';
             if (element.statusvote === false) {
@@ -55,13 +59,13 @@ export default class ResultRoom extends Component {
                 newstatus = 'Done';
                 
             }
-
+            // Show the values when the moderator changed to show cards
             let showstatuscard = '';
             if (_showcards === false) {
                 showstatuscard = 'Hidden';
             } else {
                 showstatuscard = element.valuevote
-                sum = sum + element.valuevote
+                sum = sum + element.valuevote // Sum the values votes of all users
             }
             let valueUser = {
                 user: element.user,
@@ -72,7 +76,7 @@ export default class ResultRoom extends Component {
             }
             showdata.push(valueUser);
         });
-        let finalestimation = sum/userresults.length;
+        let finalestimation = sum/userresults.length; // Calculate the final estimation
         if (_showcards) {
             _estimation = Number(finalestimation.toFixed(1));
         }else{
@@ -99,7 +103,7 @@ export default class ResultRoom extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-        
+        // Update the room when the moderator changed to show all cards
         const updateRoom = {
             roomname: this.state.roomname,
             project: this.state.project,
